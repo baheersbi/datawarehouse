@@ -9,8 +9,6 @@ CREATE TABLE Stores (
     Contact VARCHAR(255)
 );
 
-show tables;
-
 -- Creating the Employees table
 CREATE TABLE Employees (
     EmployeeID INT AUTO_INCREMENT PRIMARY KEY,
