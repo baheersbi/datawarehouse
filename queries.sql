@@ -16,6 +16,12 @@ SELECT * from Employees where Name REGEXP 'm$';
 
 SELECT * FROM Employees;
 
+SELECT StoreName AS Name, Location AS Position FROM Stores
+UNION
+SELECT Name, Position FROM Employees;
+
+
+
 create view EmployeeStore as
 SELECT EmployeeID, SSN, Name, Position, Stores.StoreID, StoreName
 FROM Employees
@@ -23,6 +29,12 @@ FROM Employees
                     ON Employees.AffiliateStore = Stores.StoreID;
 
 SELECT Name, StoreName FROM EmployeeStore;
+
+
+SELECT Stores.StoreID, Stores.StoreName, Stores.Location, Stores.Contact
+FROM Stores
+LEFT JOIN Employees ON Stores.StoreID = Employees.AffiliateStore
+WHERE Employees.AffiliateStore IS NULL;
 
 
 SELECT *
@@ -34,6 +46,11 @@ SELECT *
 FROM Employees
          RIGHT JOIN Stores
                    ON Employees.AffiliateStore = Stores.StoreID;
+
+# The Cartesian product in SQL is achieved using a CROSS JOIN, 
+         # which combines each row from the first table with every row from 
+         # the second table. This results in a set that contains all possible combinations of rows from the two tables.
+
 
 SELECT *
 FROM Employees
