@@ -63,6 +63,95 @@ WHERE A.EmployeeID <> B.EmployeeID
 ORDER BY A.SupervisorID;
 
 
+
+######### More Join Examples ########
+#List all stores along with the products they sell:
+
+SELECT 
+    Stores.StoreID,
+    Stores.StoreName,
+    Products.Name AS ProductName,
+    Products.Price,
+    Products.Quantity
+FROM 
+    Stores
+INNER JOIN 
+    StoreProducts ON Stores.StoreID = StoreProducts.StoreID
+INNER JOIN 
+    Products ON StoreProducts.ProductName = Products.Name;
+
+# Find all employees working at each store (including stores with no employees):
+SELECT 
+    Stores.StoreID,
+    Stores.StoreName,
+    Employees.EmployeeID,
+    Employees.Name AS EmployeeName,
+    Employees.Position,
+    Employees.Salary
+FROM 
+    Stores
+LEFT JOIN 
+    Employees ON Stores.StoreID = Employees.AffiliateStore;
+
+# List all employees along with their affiliated store (including employees not assigned to any store):
+
+SELECT 
+    Employees.EmployeeID,
+    Employees.Name AS EmployeeName,
+    Stores.StoreID,
+    Stores.StoreName
+FROM 
+    Employees
+RIGHT JOIN 
+    Stores ON Employees.AffiliateStore = Stores.StoreID;
+
+
+#  List all possible pairs of stores and products:
+
+SELECT 
+    Stores.StoreID,
+    Stores.StoreName,
+    Products.Name AS ProductName,
+    Products.Price
+FROM 
+    Stores
+CROSS JOIN 
+    Products;
+
+# List all stores along with their contact details and the number of employees working in each store:
+
+SELECT 
+    Stores.StoreID,
+    Stores.StoreName,
+    Stores.Contact,
+    COUNT(Employees.EmployeeID) AS NumberOfEmployees
+FROM 
+    Stores
+LEFT JOIN 
+    Employees ON Stores.StoreID = Employees.AffiliateStore
+GROUP BY 
+    Stores.StoreID, Stores.StoreName, Stores.Contact;
+
+
+# List all products available in each store along with their vendor details:
+
+SELECT 
+    Stores.StoreID,
+    Stores.StoreName,
+    Products.Name AS ProductName,
+    Products.Price,
+    Vendors.VendorName,
+    Vendors.ContactPerson
+FROM 
+    Stores
+INNER JOIN 
+    StoreProducts ON Stores.StoreID = StoreProducts.StoreID
+INNER JOIN 
+    Products ON StoreProducts.ProductName = Products.Name
+INNER JOIN 
+    Vendors ON Products.VendorName = Vendors.VendorName;
+
+
 ########Using Case##########
 
 
